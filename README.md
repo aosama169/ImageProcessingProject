@@ -18,7 +18,7 @@ npm run test
 
 ---------------------------------------------------
 
-# The Program Main EndPoint in on 
+# The Program Main EndPoint is on 
 http://localhost:3030/image
 
 # End Point to see list of the Available Images
@@ -28,8 +28,8 @@ http://localhost:3030/image/showImages
 http://localhost:3030/image/ImageName/NeededWidth/NeededHight
 
 With the following parameters:
-ImageName = the Image file name you need to process.
-NeededWidth = the Image width needed
-NeededHight = the Image hight needed
+- ImageName = the Image file name you need to process.
+- NeededWidth = the Image width needed
+- NeededHight = the Image hight needed
 
 
