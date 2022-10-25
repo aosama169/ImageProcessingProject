@@ -15,13 +15,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const sharp_1 = __importDefault(require("sharp"));
 const imageAPI = (fileName, width, height) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        yield (0, sharp_1.default)('../images/${fileName}.jpeg')
+        yield (0, sharp_1.default)('./images/' + fileName + '.jpg')
             .resize(width, height)
-            .toFile('resized/${fileName}_${width}x${height}.jpg');
+            .toFile('./thumbs/' + fileName + '_' + width + 'x' + height + '.jpg');
     }
     catch (err) {
-        console.log('Error Happened in Resizing Image: ' + err);
+        //console.log('Error Happened in Resizing Image: ' + err);
+        return 'false';
     }
-    return `thumbs/${fileName}_${width}_${height}.jpg`;
+    return 'thumbs/' + fileName + '_' + width + 'x' + height + '.jpg';
 });
 exports.default = imageAPI;

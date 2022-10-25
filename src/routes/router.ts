@@ -17,15 +17,36 @@ router.get('/:fileName/:width/:height', checker, async (req, res) => {
 
   const alteredImage = await imageAPI(fileName, width, height);
 
-  //const parentPath = path.resolve(alteredImage);
-  const img = fs.readFileSync(alteredImage);
-  res.writeHead(200, { 'Content-Type': 'image/gif' });
-  res.end(img);
+  if(alteredImage == 'false'){
+    res.send('<h2>Error</h2><h3>Could not Find Image File : '+fileName+' </h3>');
+  }else{
+    //const parentPath = path.resolve(alteredImage);
+    const img = fs.readFileSync(alteredImage);
+    res.writeHead(200, { 'Content-Type': 'image/gif' });
+    res.end(img);
+  }
+});
+
+router.get('/showImages', async (req, res) => {
+  let fileNames= '<h2>Available image files</h2>';
+
+  fs.readdir('./images/', (err, files): void => {
+    
+    if (err) console.log(err);
+    else {
+      files.forEach((file): void => {
+        fileNames += "<br>" + file;
+      });
+    }
+    res.send(fileNames);
+  });
 });
 
 router.get('*', (req, res) => {
   res.send(
-    'Welcome, You Can Find My EndPoint Following This URL: http://localhost:3030/image/ImageName/Width/Hight'
+    '<h1>Welcome</h1><br><h3>You Can Find My EndPoint Following This URL: <br>http://localhost:3030/image/ImageName/Width/Hight </h3>'+
+    '<br><br>'+
+    '<strong>Discover the Available Images From <a href="http://localhost:3030/image/showImages">Here</a></strong>'
   );
 });
 

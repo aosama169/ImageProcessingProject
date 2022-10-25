@@ -10,7 +10,8 @@ const imageAPI = async (
       .resize(width, height)
       .toFile('./thumbs/' + fileName + '_' + width + 'x' + height + '.jpg');
   } catch (err) {
-    console.log('Error Happened in Resizing Image: ' + err);
+    //console.log('Error Happened in Resizing Image: ' + err);
+    return 'false';
   }
 
   return 'thumbs/' + fileName + '_' + width + 'x' + height + '.jpg';

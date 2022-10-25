@@ -13,7 +13,18 @@ npm run prettier
 # Run esLint on the App Files
 npm run lint
 
+# Run Tests
+npm run test
+
+---------------------------------------------------
+
 # The Program Main EndPoint in on 
+http://localhost:3030/image
+
+# End Point to see list of the Available Images
+http://localhost:3030/image/showImages
+
+# The API of Resizing Images
 http://localhost:3030/image/ImageName/NeededWidth/NeededHight
 
 With the following parameters:
