@@ -16,20 +16,26 @@ const express_1 = __importDefault(require("express"));
 const checker_1 = __importDefault(require("../utilities/checker"));
 const imageAPI_1 = __importDefault(require("../imageAPI"));
 const fs_1 = __importDefault(require("fs"));
+function isNumber(n) { return /^-?[\d.]+(?:e-?\d+)?$/.test(n); }
 const router = express_1.default.Router();
 router.get('/:fileName/:width/:height', checker_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!isNumber(req.params.width) || !isNumber(req.params.height)) {
+        return res.status(404).send('Hight And Width required should be in numbers only.');
+    }
+    if (req.params.fileName.length <= 0) {
+        return res.status(404).send('Please Enter Valid Image File');
+    }
     const fileName = req.params.fileName;
     const width = parseInt(req.params.width);
     const height = parseInt(req.params.height);
-    if (width <= 0 || height <= 0 || isNaN(width) || isNaN(height)) {
+    if (width <= 0 || height <= 0) {
         return res.status(404).send('Please Enter Valid Width And Hight');
     }
     const alteredImage = yield (0, imageAPI_1.default)(fileName, width, height);
     if (alteredImage == 'false') {
-        res.send('<h2>Error</h2><h3>Could not Find Image File : ' + fileName + ' </h3>');
+        res.status(404).send('<h2>Error</h2><h3>Could not Find Image File : ' + fileName + ' </h3>');
     }
     else {
-        //const parentPath = path.resolve(alteredImage);
         const img = fs_1.default.readFileSync(alteredImage);
         res.writeHead(200, { 'Content-Type': 'image/gif' });
         res.end(img);

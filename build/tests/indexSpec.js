@@ -14,33 +14,37 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const supertest_1 = __importDefault(require("supertest"));
 const app_1 = __importDefault(require("../app"));
+const imageAPI_1 = __importDefault(require("./../imageAPI"));
 const request = (0, supertest_1.default)(app_1.default);
+//imgCacheCheck .. checker
+describe("Check an image Transforms correctly ", () => {
+    it("Exepect the image path returned is correct ", () => __awaiter(void 0, void 0, void 0, function* () {
+        const response = yield (0, imageAPI_1.default)('fjord', 50, 50);
+        expect(response).toEqual('thumbs/fjord_50x50.jpg');
+    }));
+});
 describe("Try opening main Endpoint ", () => {
-    it("should return a status code 200", (done) => __awaiter(void 0, void 0, void 0, function* () {
+    it("should return a status code 200", () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield request.get("/image");
-        setTimeout(() => {
-            expect(response.statusCode).toBe(200);
-        }, 5000);
+        expect(response.statusCode).toBe(200);
     }));
 });
 describe("Show Available Images", () => {
-    it("should return a status code 200", (done) => __awaiter(void 0, void 0, void 0, function* () {
+    it("should return a status code 200", () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield request.get("/image/showImages");
-        expect(response.statusCode).toBe(200);
-        done();
+        yield expect(response.statusCode).toBe(200);
     }));
 });
 describe("Try Resizing fjord Image", () => {
-    it("should return a status code 200", (done) => __awaiter(void 0, void 0, void 0, function* () {
+    it("should return a status code 200", () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield request.get("/image/fjord/50/50");
         expect(response.statusCode).toBe(200);
-        done();
     }));
 });
 describe("Try getting false image file ", () => {
-    it("should return a status code 404", (done) => __awaiter(void 0, void 0, void 0, function* () {
+    it("should return a status code 404", () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield request.get("/image/ahmed/50/50");
-        expect(response.statusCode).toBe(304);
-        done();
+        console.log(response);
+        expect(response.statusCode).toBe(404);
     }));
 });
