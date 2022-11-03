@@ -23,7 +23,9 @@ const checker = (
   }
 
   if (parseInt(req.params.width) <= 0 || parseInt(req.params.height) <= 0) {
-    res.status(404).send('Width and Hight Parameters Should be bigger than Zero!');
+    res
+      .status(404)
+      .send('Width and Hight Parameters Should be bigger than Zero!');
     return;
   }
 
@@ -35,7 +37,7 @@ const checker = (
   let match = false;
   let imageFile = '';
 
-  fs.readdir('./thumbs/', async(err, files): Promise<void> => {
+  fs.readdir('./thumbs/', async (err, files): Promise<void> => {
     if (err) console.log(err);
     else {
       files.forEach((file): void => {

@@ -25,7 +25,7 @@ describe('Try Resizing fjord Image', () => {
   });
 });
 
-describe('Try getting false image file ', () => {
+describe('Try getting not found image file ', () => {
   it('should return a status code 404', async () => {
     const response = await request.get('/image/ahmed/50/50');
     expect(response.statusCode).toBe(404);
@@ -37,5 +37,33 @@ describe('Check an image Transforms correctly ', () => {
     const response = await imageAPI('fjord', 50, 50);
 
     expect(response).toEqual('thumbs/fjord_50x50.jpg');
+  });
+});
+
+describe('Try sending minus width ', () => {
+  it('should return a status code 404', async () => {
+    const response = await request.get('/image/fjord/-50/50');
+    expect(response.statusCode).toBe(404);
+  });
+});
+
+describe('Try sending minus height ', () => {
+  it('should return a status code 404', async () => {
+    const response = await request.get('/image/fjord/50/-50');
+    expect(response.statusCode).toBe(404);
+  });
+});
+
+describe('Try sending non number width ', () => {
+  it('should return a status code 404', async () => {
+    const response = await request.get('/image/fjord/50a/50');
+    expect(response.statusCode).toBe(404);
+  });
+});
+
+describe('Try sending non number height ', () => {
+  it('should return a status code 404', async () => {
+    const response = await request.get('/image/fjord/50/50a');
+    expect(response.statusCode).toBe(404);
   });
 });
