@@ -3,7 +3,6 @@ import checker from '../utilities/checker';
 import imageAPI from '../imageAPI';
 import fs from 'fs';
 
-
 const router = express.Router();
 
 //Resizing End Point, it uses Checker MiddleWare to search Cached Images and ImageAPI For Resizing Images.
@@ -11,15 +10,16 @@ router.get(
   '/:fileName/:width/:height',
   checker,
   async (req, res): Promise<void> => {
-
     const fileName: string = req.params.fileName;
     const width: number = parseInt(req.params.width);
     const height: number = parseInt(req.params.height);
 
-    const alteredImage:string = await imageAPI(fileName, width, height);
+    const alteredImage: string = await imageAPI(fileName, width, height);
 
     if (alteredImage == 'false') {
-      res.status(404).send(
+      res
+        .status(404)
+        .send(
           '<h2>Error</h2><h3>Could not Find Image File : ' + fileName + ' </h3>'
         );
     } else {
